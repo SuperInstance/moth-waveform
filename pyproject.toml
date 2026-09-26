@@ -10,11 +10,17 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 dependencies = [
-    "numpy>=1.24",
-    "scipy>=1.10",
-    "quantumaudio>=0.2.0",
-    "qiskit>=1.0",
-    "qiskit-aer>=0.13",
+    # pinned, not ranged: the pins' receipts (entropy tables, gate tallies,
+    # swap overlaps) are measured on Aer shot statistics, and Aer's RNG
+    # stream is not stable across versions — unpinned CI resolved newer deps
+    # and rolled 2/5 on a tally that measures 4-5/5 locally (CI runs
+    # 36263747371, 36271606549; flake receipt in test_resonance.py).
+    # Upgrade = deliberate act: re-run the calibration, re-set the constants.
+    "numpy==2.4.6",
+    "scipy==1.17.1",
+    "quantumaudio==0.2.0",
+    "qiskit==2.5.2",
+    "qiskit-aer==0.17.2",
 ]
 
 [tool.setuptools.packages.find]
